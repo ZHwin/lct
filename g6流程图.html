@@ -1,0 +1,328 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: zhouying
+ * @Date: 2020-06-03 16:29:25
+ * @LastEditors: zhouying
+ * @LastEditTime: 2020-06-04 17:54:19
+--> 
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./js/polyfill.min.js"></script>
+    <script src="./js/g6.min.js"></script>
+  </head>
+  
+  <body>
+    <div style="text-align: center;">
+      受害人账号：<input></input> 嫌疑人账号：<input></input> 时间：<input></input> <button onclick="search()">查询</button> 
+    </div>
+   
+    <div id="container" style="width: 100%;height:900px;"></div>
+  </body>
+  <script>
+   // 获取画布大小
+
+
+var width = document.getElementById("container").scrollWidth;
+var height = document.getElementById("container").scrollHeight || 500;
+// 自定义节点
+G6.registerNode("dom-node", {
+  draw: function draw(cfg, group) {
+    var stroke = "#000";
+    var shape = group.addShape("dom", {
+      attrs: {
+        width: cfg.size[0],
+        height: cfg.size[1],
+        html: "<div id=" + cfg.id+ " class='dom-node' style=\"background-color: #1c70d3;color:#fff; border: 1px solid " + stroke + "; border-radius: 5px; width: " + (cfg.size[0] - 5) + "px;height: " + (cfg.size[1] - 5) + "px; display: flex;flex-direction: column;flex-wrap: nowrap;justify-content: center;align-items:flex-start;align-content: center;\"><span style=\"margin-left:15px\">账号：" + cfg.zh + "</span><span style=\"margin-left:15px\">金额：" + cfg.jyje + "</span><span style=\"margin-left:15px\">时间：" + cfg.jysj + "</span></div>"
+      },
+      draggable: true
+    });
+    return shape;
+  }
+});
+// 画布配置
+var graph = new G6.Graph({
+  container: "container",
+  width: width,
+  height: height,
+  fitView: true,
+  modes: {
+    "default": ['drag-canvas','drag-node', 'zoom-canvas']
+  },
+  layout: {
+    type: "dagre",
+    rankdir: "LR",
+    align: "DL",
+    nodesepFunc: function nodesepFunc() {
+      return 1;
+    },
+    ranksepFunc: function ranksepFunc() {
+      return 1;
+    }
+  },
+  fitCenter: true,
+  renderer: "svg",
+  defaultNode: {
+    type: "dom-node",
+    size: [250, 100]
+  },
+
+  defaultEdge: {
+    size: 1,
+    color: "#000",
+    style: {
+      endArrow: true
+    }
+  }
+});
+// 数据
+var data = null;
+// 搜索
+function search() {
+  // 查询接口
+
+  data = {
+    "nodes": [
+        {
+            "id": "A73E0C03BE0E3AD2E055020C29C42DD6",
+            "zh": "8888800",
+            "jydfzh": "8888801",
+            "jdbz": "0",
+            "jyje": "100000",
+            "jysj": "20200604111000",
+            "ljje": "100000",
+            "px": 1,
+            "jysjBegin": "20200604111000",
+            "jysjEnd": "20200604111502"
+        },
+        {
+            "id": "A73E0C03BE0F3AD2E055020C29C42DD6",
+            "zh": "8888800",
+            "jydfzh": "8888801",
+            "jdbz": "0",
+            "jyje": "100000",
+            "jysj": "20200604111502",
+            "ljje": "200000",
+            "px": 2,
+            "jysjBegin": "20200604111502",
+            "jysjEnd": null
+        },
+        {
+            "id": "A73E0C03BE103AD2E055020C29C42DD6",
+            "zh": "8888801",
+            "jydfzh": "8888802",
+            "jdbz": "0",
+            "jyje": "50000",
+            "jysj": "20200604111101",
+            "ljje": "50000",
+            "px": 1,
+            "jysjBegin": "20200604111101",
+            "jysjEnd": null
+        },
+        {
+            "id": "A73E0C03BE113AD2E055020C29C42DD6",
+            "zh": "8888801",
+            "jydfzh": "8888803",
+            "jdbz": "0",
+            "jyje": "50000",
+            "jysj": "20200604111103",
+            "ljje": "100000",
+            "px": 2,
+            "jysjBegin": "20200604111103",
+            "jysjEnd": null
+        },
+        {
+            "id": "A73E0C03BE123AD2E055020C29C42DD6",
+            "zh": "8888802",
+            "jydfzh": "8888804",
+            "jdbz": "0",
+            "jyje": "20000",
+            "jysj": "20200604111111",
+            "ljje": "20000",
+            "px": 1,
+            "jysjBegin": "20200604111111",
+            "jysjEnd": null
+        },
+        {
+            "id": "A73E0C03BE133AD2E055020C29C42DD6",
+            "zh": "8888802",
+            "jydfzh": "8888805",
+            "jdbz": "0",
+            "jyje": "30000",
+            "jysj": "20200604111112",
+            "ljje": "50000",
+            "px": 2,
+            "jysjBegin": "20200604111112",
+            "jysjEnd": null
+        },
+        {
+            "id": "A73E0C03BE173AD2E055020C29C42DD6",
+            "zh": "8888803",
+            "jydfzh": "8888806",
+            "jdbz": "0",
+            "jyje": "50000",
+            "jysj": "20200604111113",
+            "ljje": "50000",
+            "px": 1,
+            "jysjBegin": "20200604111113",
+            "jysjEnd": null
+        },
+        {
+            "id": "A73E0C03BE183AD2E055020C29C42DD6",
+            "zh": "8888806",
+            "jydfzh": "8888808",
+            "jdbz": "0",
+            "jyje": "50000",
+            "jysj": "20200604111114",
+            "ljje": "50000",
+            "px": 1,
+            "jysjBegin": "20200604111114",
+            "jysjEnd": null
+        },
+        {
+            "id": "A73E0C03BE193AD2E055020C29C42DD6",
+            "zh": "8888801",
+            "jydfzh": "8888802",
+            "jdbz": "0",
+            "jyje": "40000",
+            "jysj": "20200604111505",
+            "ljje": "40000",
+            "px": 1,
+            "jysjBegin": "20200604111505",
+            "jysjEnd": "20200604111601"
+        },
+        {
+            "id": "A73E0C03BE1A3AD2E055020C29C42DD6",
+            "zh": "8888801",
+            "jydfzh": "8888802",
+            "jdbz": "0",
+            "jyje": "60000",
+            "jysj": "20200604111601",
+            "ljje": "100000",
+            "px": 2,
+            "jysjBegin": "20200604111601",
+            "jysjEnd": null
+        },
+        {
+            "id": "A73E0C03BE1B3AD2E055020C29C42DD6",
+            "zh": "8888802",
+            "jydfzh": "8888804",
+            "jdbz": "0",
+            "jyje": "40000",
+            "jysj": "20200604111511",
+            "ljje": "40000",
+            "px": 1,
+            "jysjBegin": "20200604111511",
+            "jysjEnd": null
+        },
+        {
+            "id": "A73E0C03BE1C3AD2E055020C29C42DD6",
+            "zh": "8888802",
+            "jydfzh": "8888805",
+            "jdbz": "0",
+            "jyje": "60000",
+            "jysj": "20200604111712",
+            "ljje": "60000",
+            "px": 1,
+            "jysjBegin": "20200604111712",
+            "jysjEnd": null
+        },
+        {
+            "id": "A73E0C03BE1D3AD2E055020C29C42DD6",
+            "zh": "8888805",
+            "jydfzh": "8888807",
+            "jdbz": "0",
+            "jyje": "60000",
+            "jysj": "20200604111715",
+            "ljje": "60000",
+            "px": 1,
+            "jysjBegin": "20200604111715",
+            "jysjEnd": null
+        },
+        {
+            "id": "A73E0C03BE1E3AD2E055020C29C42DD6",
+            "zh": "8888807",
+            "jydfzh": "8888809",
+            "jdbz": "0",
+            "jyje": "60000",
+            "jysj": "20200604111717",
+            "ljje": "60000",
+            "px": 1,
+            "jysjBegin": "20200604111717",
+            "jysjEnd": null
+        }
+    ],
+    "code": "0",
+    "edges": [
+        {
+            "source": "A73E0C03BE0E3AD2E055020C29C42DD6",
+            "target": "A73E0C03BE103AD2E055020C29C42DD6"
+        },
+        {
+            "source": "A73E0C03BE103AD2E055020C29C42DD6",
+            "target": "A73E0C03BE123AD2E055020C29C42DD6"
+        },
+        {
+            "source": "A73E0C03BE103AD2E055020C29C42DD6",
+            "target": "A73E0C03BE133AD2E055020C29C42DD6"
+        },
+        {
+            "source": "A73E0C03BE0E3AD2E055020C29C42DD6",
+            "target": "A73E0C03BE113AD2E055020C29C42DD6"
+        },
+        {
+            "source": "A73E0C03BE113AD2E055020C29C42DD6",
+            "target": "A73E0C03BE173AD2E055020C29C42DD6"
+        },
+        {
+            "source": "A73E0C03BE173AD2E055020C29C42DD6",
+            "target": "A73E0C03BE183AD2E055020C29C42DD6"
+        },
+        {
+            "source": "A73E0C03BE0F3AD2E055020C29C42DD6",
+            "target": "A73E0C03BE193AD2E055020C29C42DD6"
+        },
+        {
+            "source": "A73E0C03BE193AD2E055020C29C42DD6",
+            "target": "A73E0C03BE1B3AD2E055020C29C42DD6"
+        },
+        {
+            "source": "A73E0C03BE0F3AD2E055020C29C42DD6",
+            "target": "A73E0C03BE1A3AD2E055020C29C42DD6"
+        },
+        {
+            "source": "A73E0C03BE1A3AD2E055020C29C42DD6",
+            "target": "A73E0C03BE1C3AD2E055020C29C42DD6"
+        },
+        {
+            "source": "A73E0C03BE1C3AD2E055020C29C42DD6",
+            "target": "A73E0C03BE1D3AD2E055020C29C42DD6"
+        },
+        {
+            "source": "A73E0C03BE1D3AD2E055020C29C42DD6",
+            "target": "A73E0C03BE1E3AD2E055020C29C42DD6"
+        }
+    ]
+}
+  graph.data(data);
+  graph.render();
+  graph.fitView();
+};
+// 导出图片
+function downLoadImg() {
+  if (data) {
+    graph.downloadFullImage("资金流动图", {
+      padding: [30, 15, 15, 15]
+    });
+    var nodesData = graph.save();
+    console.log(nodesData);
+  } else {
+    alert('数据为空，不能导出！');
+  }
+};
+  </script>
+</html>

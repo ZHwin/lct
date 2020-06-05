@@ -1,0 +1,373 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: zhouying
+ * @Date: 2020-06-04 15:53:37
+ * @LastEditors: zhouying
+ * @LastEditTime: 2020-06-04 17:24:22
+-->
+<!DOCTYPE html>
+
+<meta charset="utf-8" />
+<title>Dagre D3 Demo: Arrows</title>
+
+<script src="./js/d3.v5.min.js" charset="utf-8"></script>
+<script src="./js/dagre-d3.min.js"></script>
+
+<style id="css">
+  .clusters rect {
+    fill: #00ffd0;
+    stroke: #999;
+    stroke-width: 1.5px;
+  }
+
+  text {
+    font-weight: 300;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serf;
+    font-size: 14px;
+    fill: #000;  
+  }
+
+  .node rect {
+    stroke: #fff;
+    fill: #ea7132;
+    stroke-width: 1.5px;
+  }
+
+  .edgePath path {
+    stroke: #333;
+    stroke-width: 1.5px;
+  }
+  
+</style>
+<div>
+  <svg width="100%" height="900"></svg>
+</div>
+
+
+<script>
+  var data = {
+    nodes: [
+      {
+        id: "0",
+        zh: null,
+        jydfzh: "8888800244",
+        jdbz: null,
+        jyje: null,
+        jysj: null,
+        ljje: null,
+        px: 0,
+        jysjBegin: null,
+        jysjEnd: null,
+      },
+      {
+        id: "A73EBE375E2B7E65E055020C29C42DD6",
+        zh: "8888800",
+        jydfzh: "8888801",
+        jdbz: "0",
+        jyje: "100000",
+        jysj: "20200604111000",
+        ljje: "100000",
+        px: 1,
+        jysjBegin: "20200604111000",
+        jysjEnd: "20200604111502",
+      },
+      {
+        id: "A73EBE375E2C7E65E055020C29C42DD6",
+        zh: "8888800",
+        jydfzh: "8888801",
+        jdbz: "0",
+        jyje: "100000",
+        jysj: "20200604111502",
+        ljje: "200000",
+        px: 2,
+        jysjBegin: "20200604111502",
+        jysjEnd: null,
+      },
+      {
+        id: "A73EBE375E2D7E65E055020C29C42DD6",
+        zh: "8888801",
+        jydfzh: "8888802",
+        jdbz: "0",
+        jyje: "50000",
+        jysj: "20200604111101",
+        ljje: "50000",
+        px: 1,
+        jysjBegin: "20200604111101",
+        jysjEnd: null,
+      },
+      {
+        id: "A73EBE375E2E7E65E055020C29C42DD6",
+        zh: "8888801",
+        jydfzh: "8888803",
+        jdbz: "0",
+        jyje: "50000",
+        jysj: "20200604111103",
+        ljje: "100000",
+        px: 2,
+        jysjBegin: "20200604111103",
+        jysjEnd: null,
+      },
+      {
+        id: "A73EBE375E2F7E65E055020C29C42DD6",
+        zh: "8888802",
+        jydfzh: "8888804",
+        jdbz: "0",
+        jyje: "20000",
+        jysj: "20200604111111",
+        ljje: "20000",
+        px: 1,
+        jysjBegin: "20200604111111",
+        jysjEnd: null,
+      },
+      {
+        id: "A73EBE375E307E65E055020C29C42DD6",
+        zh: "8888802",
+        jydfzh: "8888805",
+        jdbz: "0",
+        jyje: "30000",
+        jysj: "20200604111112",
+        ljje: "50000",
+        px: 2,
+        jysjBegin: "20200604111112",
+        jysjEnd: null,
+      },
+      {
+        id: "A73EBE375E347E65E055020C29C42DD6",
+        zh: "8888803",
+        jydfzh: "8888806",
+        jdbz: "0",
+        jyje: "50000",
+        jysj: "20200604111113",
+        ljje: "50000",
+        px: 1,
+        jysjBegin: "20200604111113",
+        jysjEnd: null,
+      },
+      {
+        id: "A73EBE375E357E65E055020C29C42DD6",
+        zh: "8888806",
+        jydfzh: "8888808",
+        jdbz: "0",
+        jyje: "50000",
+        jysj: "20200604111114",
+        ljje: "50000",
+        px: 1,
+        jysjBegin: "20200604111114",
+        jysjEnd: null,
+      },
+      {
+        id: "A73EBE375E367E65E055020C29C42DD6",
+        zh: "8888801",
+        jydfzh: "8888802",
+        jdbz: "0",
+        jyje: "40000",
+        jysj: "20200604111505",
+        ljje: "40000",
+        px: 1,
+        jysjBegin: "20200604111505",
+        jysjEnd: "20200604111601",
+      },
+      {
+        id: "A73EBE375E377E65E055020C29C42DD6",
+        zh: "8888801",
+        jydfzh: "8888802",
+        jdbz: "0",
+        jyje: "60000",
+        jysj: "20200604111601",
+        ljje: "100000",
+        px: 2,
+        jysjBegin: "20200604111601",
+        jysjEnd: null,
+      },
+      {
+        id: "A73EBE375E387E65E055020C29C42DD6",
+        zh: "8888802",
+        jydfzh: "8888804",
+        jdbz: "0",
+        jyje: "40000",
+        jysj: "20200604111511",
+        ljje: "40000",
+        px: 1,
+        jysjBegin: "20200604111511",
+        jysjEnd: null,
+      },
+      {
+        id: "A73EBE375E397E65E055020C29C42DD6",
+        zh: "8888802",
+        jydfzh: "8888805",
+        jdbz: "0",
+        jyje: "60000",
+        jysj: "20200604111712",
+        ljje: "60000",
+        px: 1,
+        jysjBegin: "20200604111712",
+        jysjEnd: null,
+      },
+      {
+        id: "A73EBE375E3A7E65E055020C29C42DD6",
+        zh: "8888805",
+        jydfzh: "8888807",
+        jdbz: "0",
+        jyje: "60000",
+        jysj: "20200604111715",
+        ljje: "60000",
+        px: 1,
+        jysjBegin: "20200604111715",
+        jysjEnd: null,
+      },
+      {
+        id: "A73EBE375E3B7E65E055020C29C42DD6",
+        zh: "8888807",
+        jydfzh: "8888809",
+        jdbz: "0",
+        jyje: "60000",
+        jysj: "20200604111717",
+        ljje: "60000",
+        px: 1,
+        jysjBegin: "20200604111717",
+        jysjEnd: null,
+      },
+    ],
+    code: "0",
+    edges: [
+      {
+        source: "0",
+        target: "A73EBE375E2B7E65E055020C29C42DD6",
+        jyje: "100000",
+        jysj: "20200604111000",
+      },
+      {
+        source: "A73EBE375E2B7E65E055020C29C42DD6",
+        target: "A73EBE375E2D7E65E055020C29C42DD6",
+        jyje: "50000",
+        jysj: "20200604111101",
+      },
+      {
+        source: "A73EBE375E2D7E65E055020C29C42DD6",
+        target: "A73EBE375E2F7E65E055020C29C42DD6",
+        jyje: "20000",
+        jysj: "20200604111111",
+      },
+      {
+        source: "A73EBE375E2D7E65E055020C29C42DD6",
+        target: "A73EBE375E307E65E055020C29C42DD6",
+        jyje: "30000",
+        jysj: "20200604111112",
+      },
+      {
+        source: "A73EBE375E2B7E65E055020C29C42DD6",
+        target: "A73EBE375E2E7E65E055020C29C42DD6",
+        jyje: "50000",
+        jysj: "20200604111103",
+      },
+      {
+        source: "A73EBE375E2E7E65E055020C29C42DD6",
+        target: "A73EBE375E347E65E055020C29C42DD6",
+        jyje: "50000",
+        jysj: "20200604111113",
+      },
+      {
+        source: "A73EBE375E347E65E055020C29C42DD6",
+        target: "A73EBE375E357E65E055020C29C42DD6",
+        jyje: "50000",
+        jysj: "20200604111114",
+      },
+      {
+        source: "0",
+        target: "A73EBE375E2C7E65E055020C29C42DD6",
+        jyje: "100000",
+        jysj: "20200604111502",
+      },
+      {
+        source: "A73EBE375E2C7E65E055020C29C42DD6",
+        target: "A73EBE375E367E65E055020C29C42DD6",
+        jyje: "40000",
+        jysj: "20200604111505",
+      },
+      {
+        source: "A73EBE375E367E65E055020C29C42DD6",
+        target: "A73EBE375E387E65E055020C29C42DD6",
+        jyje: "40000",
+        jysj: "20200604111511",
+      },
+      {
+        source: "A73EBE375E2C7E65E055020C29C42DD6",
+        target: "A73EBE375E377E65E055020C29C42DD6",
+        jyje: "60000",
+        jysj: "20200604111601",
+      },
+      {
+        source: "A73EBE375E377E65E055020C29C42DD6",
+        target: "A73EBE375E397E65E055020C29C42DD6",
+        jyje: "60000",
+        jysj: "20200604111712",
+      },
+      {
+        source: "A73EBE375E397E65E055020C29C42DD6",
+        target: "A73EBE375E3A7E65E055020C29C42DD6",
+        jyje: "60000",
+        jysj: "20200604111715",
+      },
+      {
+        source: "A73EBE375E3A7E65E055020C29C42DD6",
+        target: "A73EBE375E3B7E65E055020C29C42DD6",
+        jyje: "60000",
+        jysj: "20200604111717",
+      },
+    ],
+  };
+  // 构造d3对象
+  var g = new dagreD3.graphlib.Graph({ compound: true })
+    .setGraph({})
+    .setDefaultEdgeLabel(function () {
+      return {};
+    });
+  // 画节点
+  function drawNode() {
+    for (let i in data.nodes) {
+      //画点
+      let el = data.nodes[i];
+ 
+      g.setNode(el.id, {
+        label: '账户：'+el.jydfzh,
+      });
+    }
+  }
+  // 连线
+  function drawEdg() {
+    for (let i in data.edges) {
+      // 画连线
+      let el = data.edges[i];
+      g.setEdge(el.source, el.target, {
+        arrowhead: "vee",
+        label: '金额：'+el.jyje+',时间：'+el.jysj,
+      });
+    }
+  }
+
+  drawNode();
+  drawEdg();
+
+  // 渲染画布
+  var render = new dagreD3.render();
+  var svg = d3.select("svg"),
+    svgGroup = svg.append("g");
+  // 设置缩放
+  var zoom = d3.zoom().on("zoom", function () {
+    svgGroup.attr("transform", d3.event.transform);
+  });
+  svg.call(zoom);
+  // 设置从左到右的布局
+  g.setGraph({
+    nodesep: 40,
+      ranksep: 20,
+      rankdir: "LR",
+      marginx: 10,
+      marginy: 10,
+
+  });
+  //渲染到画布上
+  render(d3.select("svg g"), g);
+
+</script>
